@@ -2,7 +2,11 @@
 title: "R Project 1 - Hello R"
 author: "Aneeka Khan"
 date: "Due Fed 3rd"
-output: html_document
+output: 
+  html_document: 
+    theme: yeti
+    fig_width: 6
+    fig_height: 4
 ---
 
 MAKE SURE YOU READ AND FOLLOW **ALL** INSTRUCTIONS ON THE INSTRUCTION DOCUMENT. 
@@ -60,22 +64,38 @@ star_data %>%
 
 ### Exercise 4
 
-(Add code and narrative as needed. Note that two R chunks are given but they are not labeled. Use the convention from above to name them appropriately.)
+The data is plotting a circle using multiple x and y coordinates.
 
-```{r}
+```{r plot-circle}
 circle_data <- datasaurus_dozen %>%
   filter(dataset == "circle")
 ggplot(data = circle_data, mapping = aes(x = x, y = y)) +
   geom_point()
 
 ```
-
-```{r}
+The data is creating a table with the correlation coefficient.
+```{r cor-circle}
 circle_data %>%
   summarize(r = cor(x, y))
 
 ```
 
 ### Exercise 5
+plot every data set
 
-(Add code and narrative as needed. To add R chunks either type out the backticks, curly braces, and the letter `r` or use the Insert chunk button above, with the green +C.)
+``` {r grand finale}
+ggplot(datasaurus_dozen, aes(x = x, y = y, color = dataset))+
+geom_point()+
+facet_wrap(~ dataset, ncol = 3) + # facet the dataset variable, in 3 cols
+theme(legend.position = "none")
+```
+
+find the correlation coeff of every data set
+
+``` {r cor}
+datasaurus_dozen %>%
+group_by(dataset) %>%
+summarize(r = cor(x, y)) %>%
+print(26)
+```
+
